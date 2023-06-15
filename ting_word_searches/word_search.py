@@ -1,19 +1,21 @@
 def exists_word(word, instance):
-    """Aqui irá sua implementação"""
     data = []
-    for arquivo in instance._queue:
-        occurrences = []
-        with open(arquivo['linhas_do_arquivo'], 'r') as file:
-            for line_number, line in enumerate(file, start=1):
-                if word.lower() in line.lower():
-                    occurrences.append({"linha": line_number})
 
-    if occurrences:
-        data.append({
+    for file_info in instance._queue:
+        lines = []
+        file = file_info["linhas_do_arquivo"]
+        for number_line, line in enumerate(file, start=1):
+            if word.lower() in line.lower():
+                lines.append({'linha': number_line})
+
+        if lines:
+            dictionary = {
                 "palavra": word,
-                "arquivo": arquivo['linhas_do_arquivo'],
-                "ocorrencias": occurrences
-            })
+                "arquivo": file_info["nome_do_arquivo"],
+                "ocorrencias": lines
+            }
+            data.append(dictionary)
+    print(data)
     return data
 
 
